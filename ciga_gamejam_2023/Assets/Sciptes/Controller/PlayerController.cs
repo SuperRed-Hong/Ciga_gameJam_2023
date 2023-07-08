@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private GameObject currentOneWayPlayform;
-    [SerializeField] private CapsuleCollider2D palyerCollider;
-    private BoxCollider2D playerController;
+    [SerializeField] private CapsuleCollider2D playerCollider;
+    private PlayerController opponent;
     private Rigidbody2D rb2D;
     Animator animator;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float basicMoveSpeed;
+    private float moveSpeed;
     [SerializeField] private float jumpForce;
     private bool _isJumping = false;
     private bool _isFalling = false;
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //character=false;
-
+        moveSpeed=basicMoveSpeed;
     }
     void Update()
     {
@@ -175,9 +176,9 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DisableCollision()
     {
         BoxCollider2D platformCollider = currentOneWayPlayform.GetComponent<BoxCollider2D>();
-        Physics2D.IgnoreCollision(palyerCollider, platformCollider);
+        Physics2D.IgnoreCollision(playerCollider, platformCollider);
         yield return new WaitForSeconds(0.5f);
-        Physics2D.IgnoreCollision(palyerCollider, platformCollider, false);
+        Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
     }
     private void FlipFace()
     {
@@ -188,6 +189,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public PlayerController GetOpponent(){
+        return opponent;
+    }
+
+    public void SetOpponent(PlayerController opponent){
+        this.opponent=opponent;
+    }
+
     public void onStunned()
     {
         _isStunned = true;
@@ -195,6 +204,12 @@ public class PlayerController : MonoBehaviour
     public void offStunned()
     {
         _isStunned = false;
+    }
+    public void onSlowed(){
+        moveSpeed=basicMoveSpeed*0.8f;
+    }
+    public void offSlowed(){
+        moveSpeed=basicMoveSpeed;
     }
     public void SetSkill(Skill skill)
     {

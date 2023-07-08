@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GiveSkillController : MonoBehaviour
 {
+    private PlayerManager playerManager;
     // Start is called before the first frame update
     void Start()
     {
-
+        playerManager=GameObject.Find("Managers").GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame
@@ -19,18 +20,9 @@ public class GiveSkillController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("222");
             PlayerController playerCaught = other.gameObject.GetComponent<PlayerController>();
-            playerCaught.SetSkill(new Flash(playerCaught));
-            //playerCaught.enabled=false;
-            //yield return new WaitForSeconds(0.8f);
-            //other.gameObject.GetComponent<PlayerController>().enabled=true;
-            //playerCaught.offStunned();
-            //Destroy(this.gameObject);
-        }
-        else
-        {
-            Debug.Log("111");
+            //playerCaught.SetSkill(new Flash(playerCaught));
+            playerCaught.SetSkill(new Impact(playerManager, playerCaught));
         }
     }
 }

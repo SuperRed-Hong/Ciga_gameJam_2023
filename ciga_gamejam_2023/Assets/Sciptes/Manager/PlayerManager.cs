@@ -35,6 +35,8 @@ public class PlayerManager : MonoBehaviour
         player2 = Instantiate(player2Prefab, player2SpawnPoint.position, player2SpawnPoint.rotation);
         player1.transform.SetParent(GameObject.Find("PlayGround").transform);
         player2.transform.SetParent(GameObject.Find("PlayGround").transform);
+        player1.GetComponent<PlayerController>().SetOpponent(player2.GetComponent<PlayerController>());
+        player2.GetComponent<PlayerController>().SetOpponent(player1.GetComponent<PlayerController>());
         arm1=player1.GetComponentInChildren<ArmController>();
         arm1.SetPlayer(player2.transform);
     }
@@ -53,6 +55,10 @@ public class PlayerManager : MonoBehaviour
 
     public float DetectDistance(){
         return (player1.transform.position - player2.transform.position).magnitude;
+    }
+
+    public void GiveSkill(PlayerController player, Skill skill){
+        player.SetSkill(skill);
     }
 
 }

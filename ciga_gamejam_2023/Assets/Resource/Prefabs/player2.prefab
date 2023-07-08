@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22bedc7583586a45860481a5c62ff2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  palyerCollider: {fileID: 4079315856628368384}
-  moveSpeed: 3
+  playerCollider: {fileID: 0}
+  basicMoveSpeed: 3
   jumpForce: 25
+  character: 0
