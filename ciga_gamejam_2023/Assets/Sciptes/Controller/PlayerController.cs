@@ -64,7 +64,11 @@ public class PlayerController : MonoBehaviour
         Physics2D.IgnoreCollision(playerCollider, platformCollider,false);
     }
 
-    public void Dizziness(){
+    public void InDizziness(){
+
+    }
+
+    public void OutDizziness(){
 
     }
 }
