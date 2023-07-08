@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     private GameObject currentOneWayPlayform;
-    [SerializeField] private CapsuleCollider2D playerCollider;
+    [SerializeField] private BoxCollider2D playerCollider;
     private PlayerController opponent;
     private Rigidbody2D rb2D;
     Animator animator;
@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
         {
             CompositeCollider2D platformCollider = currentOneWayPlayform.GetComponent<CompositeCollider2D>();
             Physics2D.IgnoreCollision(playerCollider, platformCollider);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.35f);
             Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
         }
         else

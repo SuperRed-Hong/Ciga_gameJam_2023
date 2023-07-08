@@ -8,7 +8,8 @@ public class ArmController : MonoBehaviour
     [SerializeField] private float growthRate;
     private Transform player; // 玩家的Transform组件
     private Vector3 originalScale;
-    private bool canCatch; 
+    private bool canCatch;
+    public bool isOver= false;
 
     public void SetPlayer(Transform p){
         player=p;
@@ -33,6 +34,8 @@ public class ArmController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider){
         if(collider.transform==player){
             canCatch=true;
+            Debug.Log("catch the patient");
+            isOver=true;
         }
     }
     private void OnTriggerExit2D(Collider2D collider){

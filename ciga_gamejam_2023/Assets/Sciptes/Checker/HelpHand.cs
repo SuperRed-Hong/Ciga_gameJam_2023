@@ -19,7 +19,7 @@ public class HelpHand : Checker
             }
         }else{
             growTime=0;
-            manager.GetArm().ResetArmLength();
+            //manager.GetArm().ResetArmLength();
         }
         return 0;
     }
