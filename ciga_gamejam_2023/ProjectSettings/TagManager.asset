@@ -7,7 +7,6 @@ TagManager:
   - Platform
   - OneWayPlatform
   - Gate
-  - Trap
   layers:
   - Default
   - TransparentFX
@@ -15,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Plate
   - 
   - 
   - 
