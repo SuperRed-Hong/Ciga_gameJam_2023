@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TrapController : MonoBehaviour
 {
+    [SerializeField] private float traptime;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class TrapController : MonoBehaviour
             PlayerController playerCaught = other.gameObject.GetComponent<PlayerController>();
             playerCaught.onStunned();
             //playerCaught.enabled=false;
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(traptime);
             //other.gameObject.GetComponent<PlayerController>().enabled=true;
             playerCaught.offStunned();
             Destroy(this.gameObject);
