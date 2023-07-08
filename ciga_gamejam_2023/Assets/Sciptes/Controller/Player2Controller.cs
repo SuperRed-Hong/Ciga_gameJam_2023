@@ -11,7 +11,7 @@ public class Player2Controller : PlayerController
         moveVertical = Input.GetAxisRaw("Vertical2");
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if(currentOneWayPlayform != null && currentOneWayPlayform.tag!= "Platform")
+            if(currentOneWayPlayform != null && currentOneWayPlayform.tag!= "Platform" && !dizziness)
             {
                 StartCoroutine(DisableCollision());
             }

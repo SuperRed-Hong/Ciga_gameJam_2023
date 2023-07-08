@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     protected bool isJumping;
     protected float moveHorizontal;
     protected float moveVertical;
+    protected bool dizziness;
     void Start()
     {
         rb2D  =gameObject.GetComponent<Rigidbody2D>();
@@ -25,11 +26,11 @@ public class PlayerController : MonoBehaviour
     
     protected void FixedUpdate()
     {
-        if(moveHorizontal> 0.1f || moveHorizontal < 0.1f)
+        if((moveHorizontal> 0.1f || moveHorizontal < 0.1f) && !dizziness)
         {
             rb2D.AddForce(new Vector2(moveHorizontal* moveSpeed, 0f) , ForceMode2D.Impulse);
         }
-        if (!isJumping&&moveVertical > 0.1f)
+        if (!isJumping && moveVertical > 0.1f && !dizziness)
         {
             rb2D.AddForce(new Vector2(0f, moveVertical* jumpForce), ForceMode2D.Impulse);
 
@@ -65,10 +66,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public void InDizziness(){
-
+        dizziness=true;
     }
 
     public void OutDizziness(){
-
+        dizziness=false;
     }
 }

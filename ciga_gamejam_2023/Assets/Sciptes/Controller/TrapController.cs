@@ -20,9 +20,9 @@ public class TrapController : MonoBehaviour
             Debug.Log("222");
             PlayerController playerCaught=other.gameObject.GetComponent<PlayerController>();
             playerCaught.InDizziness();
-            playerCaught.enabled=false;
+            //playerCaught.enabled=false;
             yield return new WaitForSeconds(0.8f);
-            other.gameObject.GetComponent<PlayerController>().enabled=true;
+            //other.gameObject.GetComponent<PlayerController>().enabled=true;
             playerCaught.OutDizziness();
             Destroy(this.gameObject);
         }else{
