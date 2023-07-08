@@ -15,14 +15,7 @@ public class Player1Controller : MonoBehaviour
     private bool _isFalling = false;
     private bool _isRunning = false;
     private bool isFacingRight  =true;
-    private bool isStunned =false;
-    private bool isPlayerStunned = false;
-    bool OnStunned()
-    {
-        return true;
-    }
     
-        
 
     private bool isFalling
     {
@@ -76,8 +69,7 @@ public class Player1Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!OnStunned()) 
-        {
+        
             moveHorizontal = Input.GetAxisRaw("Horizontal1");
             moveVertical = Input.GetAxisRaw("Vertical1");
             if (Input.GetKeyDown(KeyCode.S))
@@ -87,12 +79,7 @@ public class Player1Controller : MonoBehaviour
                     StartCoroutine(DisableCollision());
                 }
             }
-        }
-        else
-        {
-            moveHorizontal = 0;
-            moveVertical = 0;
-        }
+      
         
 
     }
