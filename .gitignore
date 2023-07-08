@@ -44,3 +44,5 @@ sysinfo.txt
 Assets/StreamingAssets/crashlytics-build.properties
 *.log
 *.log
+*.log
+*.log
