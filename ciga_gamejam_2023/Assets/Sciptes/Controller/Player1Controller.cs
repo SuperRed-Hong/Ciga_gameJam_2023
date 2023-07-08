@@ -8,48 +8,118 @@ public class Player1Controller : MonoBehaviour
     [SerializeField] private CapsuleCollider2D palyerCollider;
     private BoxCollider2D playerController;
     private Rigidbody2D rb2D;
+    Animator animator;
     [SerializeField] private float moveSpeed;
     [SerializeField]  private float jumpForce;
-    private bool isJumping;
+    private bool _isJumping = false;
+    private bool _isFalling = false;
+    private bool _isRunning = false;
+    private bool isFacingRight  =true;
+    private bool isStunned =false;
+    private bool isPlayerStunned = false;
+    bool OnStunned()
+    {
+        return true;
+    }
+    
+        
+
+    private bool isFalling
+    {
+        get
+        {
+            return _isFalling;
+        }
+        set
+        {
+            _isFalling = value;
+            animator.SetBool("isFalling", value);
+
+        }
+    }
+
+    public bool isJumping
+    {
+        get
+        {
+            return _isJumping;
+        }
+        private set
+        {
+            _isJumping = value;
+            animator.SetBool("isJumping", value);
+        }
+    }
     private float moveHorizontal;
     private float moveVertical;
+    public bool isRunning { get
+        {
+            return _isRunning; }
+        private set
+        {
+            _isRunning = value;
+            animator.SetBool("isRunning" , value);
+        }
+    }
+    private void Awake()
+    {
+        rb2D = gameObject.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+
+    }
     void Start()
     {
-        rb2D  =gameObject.GetComponent<Rigidbody2D>();
        
-        isJumping = false;
-        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal1");
-        moveVertical = Input.GetAxisRaw("Vertical1");
-        if(Input.GetKeyDown(KeyCode.S))
+        if (!OnStunned()) 
         {
-            if(currentOneWayPlayform != null && currentOneWayPlayform.tag!= "Platform")
+            moveHorizontal = Input.GetAxisRaw("Horizontal1");
+            moveVertical = Input.GetAxisRaw("Vertical1");
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                StartCoroutine(DisableCollision());
+                if (currentOneWayPlayform != null && currentOneWayPlayform.tag != "Platform")
+                {
+                    StartCoroutine(DisableCollision());
+                }
             }
         }
+        else
+        {
+            moveHorizontal = 0;
+            moveVertical = 0;
+        }
+        
 
     }
     private void FixedUpdate()
     {
-        if(moveHorizontal> 0.1f || moveHorizontal < 0.1f)
+        if(moveHorizontal> 0.1f || moveHorizontal < -0.1f)
         {
+            
             rb2D.AddForce(new Vector2(moveHorizontal* moveSpeed, 0f) , ForceMode2D.Impulse);
+            isRunning = true;
         }
+        else
+        {
+            isRunning = false;
+        }
+
         if (!isJumping&&moveVertical > 0.1f)
         {
             rb2D.AddForce(new Vector2(0f, moveVertical* jumpForce), ForceMode2D.Impulse);
 
         }
+        
+        onFalling();
+        FlipFace();
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private GameObject OnCollisionEnter2D(Collision2D collision)
 
     {
         if ((collision.gameObject.tag == "OneWayPlatform"|| collision.gameObject.tag == "Platform") && gameObject.transform.position.y - collision.gameObject.transform.position.y>0 && rb2D.velocity.y ==0)
@@ -57,6 +127,7 @@ public class Player1Controller : MonoBehaviour
             isJumping = false;
             currentOneWayPlayform = collision.gameObject;
         }
+        return collision.gameObject;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -68,6 +139,19 @@ public class Player1Controller : MonoBehaviour
 
         }
     }
+    private void onFalling()
+    {
+        if (rb2D.velocity.y < 0f)
+        {
+            isFalling = true;
+            
+        }
+        else
+        {
+            isFalling = false;
+        }
+    }
+
 
     private IEnumerator DisableCollision()
     {
@@ -75,5 +159,15 @@ public class Player1Controller : MonoBehaviour
         Physics2D.IgnoreCollision(palyerCollider, platformCollider);
         yield return new WaitForSeconds(0.5f);
         Physics2D.IgnoreCollision(palyerCollider, platformCollider,false);
+    }
+    private void FlipFace()
+    {
+        if (isFacingRight&& moveHorizontal<0f || !isFacingRight && moveHorizontal >0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
     }
 }

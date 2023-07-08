@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4079315856628368385}
   - component: {fileID: 4079315856628368384}
   - component: {fileID: 2599464532395883302}
+  - component: {fileID: -9038320898490225348}
   m_Layer: 0
   m_Name: player2
   m_TagString: Player
@@ -139,3 +140,23 @@ MonoBehaviour:
   palyerCollider: {fileID: 4079315856628368384}
   moveSpeed: 3
   jumpForce: 25
+--- !u!95 &-9038320898490225348
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4079315856628368386}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb7a5d50f8d1f6e40a0884c4c0b925f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
