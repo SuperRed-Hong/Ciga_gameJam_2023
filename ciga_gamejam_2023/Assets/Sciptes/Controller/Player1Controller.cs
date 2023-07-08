@@ -2,26 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player1Controller : MonoBehaviour
+public class Player1Controller : PlayerController
 {
-    private GameObject currentOneWayPlayform;
-    [SerializeField] private CapsuleCollider2D palyerCollider;
-    private BoxCollider2D playerController;
-    private Rigidbody2D rb2D;
-    [SerializeField] private float moveSpeed;
-    [SerializeField]  private float jumpForce;
-    private bool isJumping;
-    private float moveHorizontal;
-    private float moveVertical;
-    void Start()
-    {
-        rb2D  =gameObject.GetComponent<Rigidbody2D>();
-       
-        isJumping = false;
-        
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -35,45 +17,5 @@ public class Player1Controller : MonoBehaviour
             }
         }
 
-    }
-    private void FixedUpdate()
-    {
-        if(moveHorizontal> 0.1f || moveHorizontal < 0.1f)
-        {
-            rb2D.AddForce(new Vector2(moveHorizontal* moveSpeed, 0f) , ForceMode2D.Impulse);
-        }
-        if (!isJumping&&moveVertical > 0.1f)
-        {
-            rb2D.AddForce(new Vector2(0f, moveVertical* jumpForce), ForceMode2D.Impulse);
-
-        }
-
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-
-    {
-        if ((collision.gameObject.tag == "OneWayPlatform"|| collision.gameObject.tag == "Platform") && gameObject.transform.position.y - collision.gameObject.transform.position.y>0 && rb2D.velocity.y ==0)
-        {
-            isJumping = false;
-            currentOneWayPlayform = collision.gameObject;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "OneWayPlatform" || collision.gameObject.tag == "Platform")
-        {
-            isJumping = true;
-            currentOneWayPlayform = null;
-
-        }
-    }
-
-    private IEnumerator DisableCollision()
-    {
-        BoxCollider2D platformCollider = currentOneWayPlayform.GetComponent<BoxCollider2D>();
-        Physics2D.IgnoreCollision(palyerCollider, platformCollider);
-        yield return new WaitForSeconds(0.5f);
-        Physics2D.IgnoreCollision(palyerCollider, platformCollider,false);
     }
 }
