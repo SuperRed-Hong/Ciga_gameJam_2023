@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c7dc72aae453d4fa7c856dd472bd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hand: {fileID: 8995543083924401976}
   growthRate: 0.008
 --- !u!70 &8995543083924401976
 CapsuleCollider2D:

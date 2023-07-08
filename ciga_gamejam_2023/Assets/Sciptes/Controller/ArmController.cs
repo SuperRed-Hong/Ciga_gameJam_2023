@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ArmController : MonoBehaviour
 {
-    [SerializeField]
-    private float growthRate = 0.1f;
+    //[SerializeField] private CapsuleCollider2D hand;
+    [SerializeField] private float growthRate;
     private Transform player; // 玩家的Transform组件
-    //[SerializeField] private Collider2D DetectArea;
     private Vector3 originalScale;
+    private bool canCatch; 
 
     public void SetPlayer(Transform p){
         player=p;
@@ -17,15 +17,27 @@ public class ArmController : MonoBehaviour
 
     private void Update()
     {
-        if (player != null)
-        {
-            // 计算玩家相对于箭头的方向
-            Vector3 direction = player.position - transform.position;
+        if(Input.GetKeyDown(KeyCode.Space)){
+            if(canCatch){
+                Debug.Log("Catch!");
+                //catch!
+            }
+        }
+        // 计算玩家相对于箭头的方向
+        Vector3 direction = player.position - transform.position;
 
-            // 将箭头旋转到指向玩家的方向
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
+        // 将箭头旋转到指向玩家的方向
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+    private void OnTriggerEnter2D(Collider2D collider){
+        if(collider.transform==player){
+            canCatch=true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collider){
+        if(collider.transform==player){
+            canCatch=false;
         }
     }
     public void GrowArmLength()
@@ -39,5 +51,5 @@ public class ArmController : MonoBehaviour
     public void ResetArmLength(){
         transform.localScale = originalScale;
     }
-  
+    
 }

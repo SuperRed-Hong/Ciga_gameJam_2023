@@ -22,9 +22,9 @@ public class Impact : Skill{
         player.offStunned();
         if(manager.DetectDistance()<range){
             Debug.Log("Hit");
-            player.GetOpponent().onSlowed();
+            player.GetOpponent().ChangeSpeed(0.7f);
             yield return new WaitForSeconds(influenceTime);
-            player.GetOpponent().offSlowed();
+            player.GetOpponent().ResetSpeed();
         }
     }
 }

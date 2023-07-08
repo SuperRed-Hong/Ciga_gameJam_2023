@@ -205,10 +205,10 @@ public class PlayerController : MonoBehaviour
     {
         _isStunned = false;
     }
-    public void onSlowed(){
-        moveSpeed=basicMoveSpeed*0.8f;
+    public void ChangeSpeed(float ratio){
+        moveSpeed=basicMoveSpeed*ratio;
     }
-    public void offSlowed(){
+    public void ResetSpeed(){
         moveSpeed=basicMoveSpeed;
     }
     public void SetSkill(Skill skill)
