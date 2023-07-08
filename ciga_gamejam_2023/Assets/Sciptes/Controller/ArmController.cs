@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class ArmController : MonoBehaviour
 {
-    public Transform player; // 玩家的Transform组件
+    private Transform player; // 玩家的Transform组件
+
+    public void SetPlayer(Transform p){
+        player=p;
+    }
 
     private void Update()
     {
