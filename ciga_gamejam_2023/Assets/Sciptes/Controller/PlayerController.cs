@@ -6,11 +6,12 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     private GameObject currentOneWayPlayform;
-    [SerializeField] private CapsuleCollider2D palyerCollider;
-    private BoxCollider2D playerController;
+    [SerializeField] private CapsuleCollider2D playerCollider;
+    private PlayerController opponent;
     private Rigidbody2D rb2D;
     Animator animator;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float basicMoveSpeed;
+    private float moveSpeed;
     [SerializeField] private float jumpForce;
     private bool _isJumping = false;
     private bool _isFalling = false;
@@ -70,8 +71,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //character=false;
-        Physics2D.queriesStartInColliders = true; // 在物体开始时进行查询
-        Physics2D.queriesHitTriggers = true; // 检测触发器
+        moveSpeed=basicMoveSpeed;
     }
     void Update()
     {
@@ -204,6 +204,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public PlayerController GetOpponent(){
+        return opponent;
+    }
+
+    public void SetOpponent(PlayerController opponent){
+        this.opponent=opponent;
+    }
+
     public void onStunned()
     {
         _isStunned = true;
@@ -211,6 +219,12 @@ public class PlayerController : MonoBehaviour
     public void offStunned()
     {
         _isStunned = false;
+    }
+    public void ChangeSpeed(float ratio){
+        moveSpeed=basicMoveSpeed*ratio;
+    }
+    public void ResetSpeed(){
+        moveSpeed=basicMoveSpeed;
     }
     public void SetSkill(Skill skill)
     {

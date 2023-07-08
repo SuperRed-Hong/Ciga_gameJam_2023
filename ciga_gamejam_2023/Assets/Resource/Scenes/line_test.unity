@@ -952,7 +952,7 @@ GameObject:
   - component: {fileID: 1814015870}
   - component: {fileID: 1814015873}
   m_Layer: 0
-  m_Name: Trap
+  m_Name: SkillTrap
   m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
