@@ -22,8 +22,6 @@ public class DetectAreaCon : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Debug.Log("Detecting player : " + collision.ToString());
-
-            Playerhand.GetComponent<ArmController>().GrowArmLength();
         }
     }
     

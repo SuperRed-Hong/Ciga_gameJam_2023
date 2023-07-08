@@ -5,8 +5,14 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private GameObject player1Prefab, player2Prefab;
-    
     [SerializeField] private Transform player1SpawnPoint, player2SpawnPoint;
+    [SerializeField] private float growMaxDistance;
+    [SerializeField] private int growMaxTime;
+    private int growTime;
+    private GameObject player1;//抓人者
+    private GameObject player2;//被抓者
+    private ArmController arm1;
+
     private void Awake()
     {
         SpawnPlayer();
@@ -14,7 +20,8 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        InvokeRepeating("CheckByTime",0f,Time.deltaTime);
+        //Debug.Log(Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -24,16 +31,28 @@ public class PlayerManager : MonoBehaviour
     }
     void SpawnPlayer()
     {
-        GameObject player1 = Instantiate(player1Prefab, player1SpawnPoint.position, player1SpawnPoint.rotation);
-        GameObject player2 = Instantiate(player2Prefab, player2SpawnPoint.position, player2SpawnPoint.rotation);
+        player1 = Instantiate(player1Prefab, player1SpawnPoint.position, player1SpawnPoint.rotation);
+        player2 = Instantiate(player2Prefab, player2SpawnPoint.position, player2SpawnPoint.rotation);
         player1.transform.SetParent(GameObject.Find("PlayGround").transform);
         player2.transform.SetParent(GameObject.Find("PlayGround").transform);
-        if(player1.GetComponentInChildren<ArmController>()==null){
-            Debug.Log("777");
+        arm1=player1.GetComponentInChildren<ArmController>();
+        arm1.SetPlayer(player2.transform);
+    }
+
+    public void CheckByTime(){
+        if(DetectDistance()<growMaxDistance){
+            if(growTime < growMaxTime){
+                ++growTime;
+                arm1.GrowArmLength();
+            }
         }else{
-            player1.GetComponentInChildren<ArmController>().SetPlayer(player2.transform);
+            growTime=0;
+            arm1.ResetArmLength();
         }
     }
-    
+
+    public float DetectDistance(){
+        return (player1.transform.position - player2.transform.position).magnitude;
+    }
 
 }

@@ -7,10 +7,12 @@ public class ArmController : MonoBehaviour
     [SerializeField]
     private float growthRate = 0.1f;
     private Transform player; // 玩家的Transform组件
-    [SerializeField] private Collider2D DetectArea;
+    //[SerializeField] private Collider2D DetectArea;
+    private Vector3 originalScale;
 
     public void SetPlayer(Transform p){
         player=p;
+        originalScale=transform.localScale;
     }
 
     private void Update()
@@ -24,9 +26,6 @@ public class ArmController : MonoBehaviour
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-            GrowArmLength();
-
-
         }
     }
     public void GrowArmLength()
@@ -36,6 +35,9 @@ public class ArmController : MonoBehaviour
         newScale.y += growthRate * Time.deltaTime;
 
         transform.localScale = newScale;
+    }
+    public void ResetArmLength(){
+        transform.localScale = originalScale;
     }
   
 }
