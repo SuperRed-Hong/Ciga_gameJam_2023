@@ -4,8 +4,8 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-Logs/
-UserSettings/
+/ciga_gamejam_2023/Logs
+/ciga_gamejam_2023/UserSettings
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
