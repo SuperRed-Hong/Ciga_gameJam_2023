@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
 
     {
-        if ((collision.gameObject.tag == "OneWayPlatform"|| collision.gameObject.tag == "Platform") && rb2D.velocity.y == 0)
+        if ((collision.gameObject.tag == "OneWayPlatform"|| collision.gameObject.tag == "Platform") && gameObject.transform.position.y - collision.gameObject.transform.position.y>0)
         {
             isJumping = false;
             currentOneWayPlayform = collision.gameObject;
