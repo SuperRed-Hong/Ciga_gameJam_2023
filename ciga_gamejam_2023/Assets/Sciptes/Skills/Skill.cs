@@ -4,6 +4,6 @@ using UnityEngine;
 
 public abstract class Skill //: MonoBehaviour
 {
-    private PlayerController player;
+    protected PlayerController player;
     public abstract int UseSkill();
 }
