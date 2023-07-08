@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class GateController : MonoBehaviour
 {
-    public Rigidbody2D rb2D;//自己的刚体
+    [SerializeField] private Rigidbody2D rb2D;//自己的刚体
+    [SerializeField] private float startTime;
+    [SerializeField] private float timeCost;
+    [SerializeField] private float period;
+    [SerializeField] private float speed;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("GateUp",2.0f,4.0f);
-        InvokeRepeating("GateStop",2.8f,2.0f);
-        InvokeRepeating("GateDown",4.0f,4.0f);
+        InvokeRepeating("GateUp",startTime,period*2);
+        InvokeRepeating("GateStop",startTime+timeCost,period);
+        InvokeRepeating("GateDown",startTime+period,period*2);
     }
 
     // Update is called once per frame
@@ -20,11 +24,11 @@ public class GateController : MonoBehaviour
     }
 
     public void GateUp(){
-        rb2D.velocity=new Vector2(0f, 5f);
+        rb2D.velocity=new Vector2(0f, speed);
     }
 
     public void GateDown(){
-        rb2D.velocity=new Vector2(0f, -5f);
+        rb2D.velocity=new Vector2(0f, -speed);
     }
 
     public void GateStop(){
