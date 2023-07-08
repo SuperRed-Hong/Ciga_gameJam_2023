@@ -34,5 +34,6 @@ public class PlayerManager : MonoBehaviour
             player1.GetComponentInChildren<ArmController>().SetPlayer(player2.transform);
         }
     }
+    
 
 }

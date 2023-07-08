@@ -184,9 +184,7 @@ public class PlayerController : MonoBehaviour
         if (isFacingRight && moveHorizontal < 0f || !isFacingRight && moveHorizontal > 0f)
         {
             isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            this.gameObject.GetComponent<SpriteRenderer>().flipX=!this.gameObject.GetComponent<SpriteRenderer>().flipX;
         }
     }
 
@@ -204,5 +202,8 @@ public class PlayerController : MonoBehaviour
     }
     public void SetCharacter(bool c){
         character=c;
+    }
+    public void FlipCharacter(){
+        character=!character;
     }
 }
