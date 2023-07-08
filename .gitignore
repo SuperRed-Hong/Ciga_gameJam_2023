@@ -4,8 +4,9 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-/ciga_gamejam_2023/Logs
-/ciga_gamejam_2023/UserSettings
+[Ll]ogs/
+[Pp]ackages/
+UserSettings/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
@@ -41,3 +42,5 @@ sysinfo.txt
 
 # Crashlytics generated file
 Assets/StreamingAssets/crashlytics-build.properties
+*.log
+*.log
