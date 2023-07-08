@@ -182,12 +182,12 @@ public class PlayerController : MonoBehaviour
  
 
     private IEnumerator DisableCollision()
-    { if (currentOneWayPlayform.GetComponent<BoxCollider2D>() != null)
+    { if (currentOneWayPlayform.GetComponent<CompositeCollider2D>() != null)
         {
-            TilemapCollider2D platformCollider = currentOneWayPlayform.GetComponent<TilemapCollider2D>();
-            Physics2D.IgnoreCollision(palyerCollider, platformCollider);
-            yield return new WaitForSeconds(0.2f);
-            Physics2D.IgnoreCollision(palyerCollider, platformCollider, false);
+            CompositeCollider2D platformCollider = currentOneWayPlayform.GetComponent<CompositeCollider2D>();
+            Physics2D.IgnoreCollision(playerCollider, platformCollider);
+            yield return new WaitForSeconds(0.5f);
+            Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
         }
         else
         {

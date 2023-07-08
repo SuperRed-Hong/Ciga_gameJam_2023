@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c7dc72aae453d4fa7c856dd472bd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 8995543083924401976}
   growthRate: 0.008
 --- !u!70 &8995543083924401976
 CapsuleCollider2D:
@@ -247,6 +246,7 @@ GameObject:
   - component: {fileID: 7449310370306352102}
   - component: {fileID: 3374185702710475682}
   - component: {fileID: -7701871019092232629}
+  - component: {fileID: 1074782433}
   m_Layer: 6
   m_Name: player1
   m_TagString: Player
@@ -356,8 +356,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0051531526, y: -0.012760781}
-  m_Size: {x: 0.11307089, y: 0.16045594}
+  m_Offset: {x: 0.009010418, y: -0.02}
+  m_Size: {x: 0.0751533, y: 0.118054524}
   m_Direction: 0
 --- !u!95 &3374185702710475682
 Animator:
@@ -391,7 +391,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22bedc7583586a45860481a5c62ff2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollider: {fileID: 0}
+  playerCollider: {fileID: 7449310370306352102}
   basicMoveSpeed: 3
-  jumpForce: 25
+  jumpForce: 40
   character: 1
+--- !u!70 &1074782433
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449310370306352121}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0051793805, y: -0.08338173}
+  m_Size: {x: 0.10315366, y: 0.013285811}
+  m_Direction: 1
