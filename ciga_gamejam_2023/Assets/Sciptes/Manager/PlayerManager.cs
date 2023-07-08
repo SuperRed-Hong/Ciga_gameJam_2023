@@ -23,8 +23,10 @@ public class PlayerManager : MonoBehaviour
     }
     void SpawnPlayer()
     {
-        Instantiate(player1Prefab, player1SpawnPoint.position, player1SpawnPoint.rotation);
-        Instantiate(player2Prefab, player2SpawnPoint.position, player2SpawnPoint.rotation);
+        GameObject player1 =Instantiate(player1Prefab, player1SpawnPoint.position, player1SpawnPoint.rotation);
+        GameObject player2 = Instantiate(player2Prefab, player2SpawnPoint.position, player2SpawnPoint.rotation);
+        player1.transform.SetParent(GameObject.Find("PlayGround").transform);
+        player2.transform.SetParent(GameObject.Find("PlayGround").transform);
     }
 
 }
