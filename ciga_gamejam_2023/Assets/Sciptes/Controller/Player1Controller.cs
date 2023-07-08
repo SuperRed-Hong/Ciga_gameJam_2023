@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player1Controller : MonoBehaviour
 {
     private GameObject currentOneWayPlayform;
     [SerializeField] private CapsuleCollider2D palyerCollider;
@@ -19,16 +19,16 @@ public class PlayerController : MonoBehaviour
         moveSpeed = 3f;
         jumpForce = 20f;
         isJumping = false;
-        isJumping = false;
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-        moveVertical = Input.GetAxisRaw("Vertical");
-        if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        moveHorizontal = Input.GetAxisRaw("Horizontal1");
+        moveVertical = Input.GetAxisRaw("Vertical1");
+        if(Input.GetKeyDown(KeyCode.S))
         {
             if(currentOneWayPlayform != null && currentOneWayPlayform.tag!= "Platform")
             {
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
 
     {
-        if ((collision.gameObject.tag == "OneWayPlatform"|| collision.gameObject.tag == "Platform") && gameObject.transform.position.y - collision.gameObject.transform.position.y>0)
+        if ((collision.gameObject.tag == "OneWayPlatform"|| collision.gameObject.tag == "Platform") && gameObject.transform.position.y - collision.gameObject.transform.position.y>0 && rb2D.velocity.y ==0)
         {
             isJumping = false;
             currentOneWayPlayform = collision.gameObject;
