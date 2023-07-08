@@ -227,8 +227,8 @@ GameObject:
   - component: {fileID: 7449310370306352100}
   - component: {fileID: 7449310370306352103}
   - component: {fileID: 7449310370306352102}
-  - component: {fileID: 8162102029662274836}
   - component: {fileID: 3374185702710475682}
+  - component: {fileID: -7701871019092232629}
   m_Layer: 6
   m_Name: player1
   m_TagString: Player
@@ -341,21 +341,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0051531526, y: -0.012760781}
   m_Size: {x: 0.11307089, y: 0.16045594}
   m_Direction: 0
---- !u!114 &8162102029662274836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449310370306352121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33004c6a6a4333d45b4bf8385133efec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  palyerCollider: {fileID: 7449310370306352102}
-  moveSpeed: 3
-  jumpForce: 25
 --- !u!95 &3374185702710475682
 Animator:
   serializedVersion: 4
@@ -376,3 +361,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-7701871019092232629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449310370306352121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22bedc7583586a45860481a5c62ff2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  palyerCollider: {fileID: 7449310370306352102}
+  moveSpeed: 3
+  jumpForce: 25
+  character: 1
