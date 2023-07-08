@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool _isStunned = false;
     private Skill currentSkill;
     [SerializeField] private bool character;
+    private bool _isCollision;
 
     private bool isFalling
     {
@@ -68,7 +70,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //character=false;
-
+        Physics2D.queriesStartInColliders = true; // 在物体开始时进行查询
+        Physics2D.queriesHitTriggers = true; // 检测触发器
     }
     void Update()
     {
@@ -138,18 +141,24 @@ public class PlayerController : MonoBehaviour
         
 
     }
-    private GameObject OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerStay2D(Collider2D collision)
 
     {
-        if ((collision.gameObject.tag == "OneWayPlatform" || collision.gameObject.tag == "Platform") && gameObject.transform.position.y - collision.gameObject.transform.position.y > 0 && rb2D.velocity.y == 0)
+        if (_isCollision == false)
         {
-            isJumping = false;
-            currentOneWayPlayform = collision.gameObject;
+            if ((collision.gameObject.tag == "OneWayPlatform" || collision.gameObject.tag == "Platform")  /*gameObject.transform.position.y - collision.gameObject.transform.position.y > 0 */ && rb2D.velocity.y == 0)
+            {
+                isJumping = false;
+                currentOneWayPlayform = collision.gameObject;
+            }
         }
-        return collision.gameObject;
+        
+        
     }
+   
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "OneWayPlatform" || collision.gameObject.tag == "Platform")
         {
@@ -170,14 +179,21 @@ public class PlayerController : MonoBehaviour
             isFalling = false;
         }
     }
-
+ 
 
     private IEnumerator DisableCollision()
-    {
-        BoxCollider2D platformCollider = currentOneWayPlayform.GetComponent<BoxCollider2D>();
-        Physics2D.IgnoreCollision(palyerCollider, platformCollider);
-        yield return new WaitForSeconds(0.5f);
-        Physics2D.IgnoreCollision(palyerCollider, platformCollider, false);
+    { if (currentOneWayPlayform.GetComponent<BoxCollider2D>() != null)
+        {
+            TilemapCollider2D platformCollider = currentOneWayPlayform.GetComponent<TilemapCollider2D>();
+            Physics2D.IgnoreCollision(palyerCollider, platformCollider);
+            yield return new WaitForSeconds(0.2f);
+            Physics2D.IgnoreCollision(palyerCollider, platformCollider, false);
+        }
+        else
+        {
+            Debug.Log("can't get currentOneWayPlayForm");
+        }
+        
     }
     private void FlipFace()
     {
