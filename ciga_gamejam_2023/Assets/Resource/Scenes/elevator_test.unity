@@ -915,6 +915,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elevator: {fileID: 229824650}
+  speed: 0
+  period: 0
 --- !u!212 &425692149
 SpriteRenderer:
   m_ObjectHideFlags: 0
