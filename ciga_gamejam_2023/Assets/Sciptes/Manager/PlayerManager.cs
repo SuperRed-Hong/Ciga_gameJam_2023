@@ -6,16 +6,15 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private GameObject player1Prefab, player2Prefab;
     [SerializeField] private Transform player1SpawnPoint, player2SpawnPoint;
-    [SerializeField] private float growMaxDistance;
-    [SerializeField] private int growMaxTime;
-    private int growTime;
     private GameObject player1;//抓人者
     private GameObject player2;//被抓者
     private ArmController arm1;
-
+    private List<Checker> checker_list;
     private void Awake()
     {
+        checker_list=new List<Checker>();
         SpawnPlayer();
+        AddChecker(new HelpHand(this));
     }
     // Start is called before the first frame update
     void Start()
@@ -41,15 +40,13 @@ public class PlayerManager : MonoBehaviour
         arm1.SetPlayer(player2.transform);
     }
 
+    public void AddChecker(Checker checker){
+        checker_list.Add(checker);
+    }
+
     public void CheckByTime(){
-        if(DetectDistance()<growMaxDistance){
-            if(growTime < growMaxTime){
-                ++growTime;
-                arm1.GrowArmLength();
-            }
-        }else{
-            growTime=0;
-            arm1.ResetArmLength();
+        foreach(Checker checher in checker_list){
+            checher.Check();
         }
     }
 
@@ -61,4 +58,15 @@ public class PlayerManager : MonoBehaviour
         player.SetSkill(skill);
     }
 
+    public PlayerController GetPlayer1(){
+        return player1.GetComponent<PlayerController>();
+    }
+
+    public PlayerController GetPlayer2(){
+        return player2.GetComponent<PlayerController>();
+    }
+    
+    public ArmController GetArm(){
+        return arm1;
+    }
 }
