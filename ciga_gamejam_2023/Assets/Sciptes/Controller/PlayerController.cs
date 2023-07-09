@@ -7,21 +7,26 @@ public class PlayerController : MonoBehaviour
 {
     private GameObject currentOneWayPlayform;
     [SerializeField] private BoxCollider2D playerCollider;
+    [SerializeField] private ArmController arm;
     private PlayerController opponent;
+    private PlayerManager manager;
     private Rigidbody2D rb2D;
     Animator animator;
+
     [SerializeField] private float basicMoveSpeed;
     private float moveSpeed;
     [SerializeField] private float jumpForce;
+    private Skill currentSkill;
+
+    [SerializeField] private bool character;
+    private bool role;
+
     private bool _isJumping = false;
     private bool _isFalling = false;
     private bool _isRunning = false;
     private bool isFacingRight = true;
     private bool _isStunned = false;
-    private Skill currentSkill;
-    [SerializeField] private bool character;
     private bool _isCollision;
-
     private bool isFalling
     {
         get
@@ -66,11 +71,10 @@ public class PlayerController : MonoBehaviour
     {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        role=character;
     }
     void Start()
     {
-        //character=false;
         moveSpeed=basicMoveSpeed;
     }
     void Update()
@@ -204,6 +208,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Win(){
+        manager.EndGame(true);
+        //Debug.Log(character);
+    }
+
     public PlayerController GetOpponent(){
         return opponent;
     }
@@ -235,5 +244,20 @@ public class PlayerController : MonoBehaviour
     }
     public void FlipCharacter(){
         character=!character;
+    }
+    public void SetRole(bool role){
+        this.role=role;
+        arm.SetUsable(role);
+    }
+    public ArmController GetArm(){
+        return arm;
+    }
+
+    public PlayerManager GetManager(){
+        return manager;
+    }
+
+    public void SetManager(PlayerManager manager){
+        this.manager=manager;
     }
 }

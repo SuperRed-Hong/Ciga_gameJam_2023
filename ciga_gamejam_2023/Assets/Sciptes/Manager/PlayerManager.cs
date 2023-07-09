@@ -6,20 +6,27 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private GameObject player1Prefab, player2Prefab;
     [SerializeField] private Transform player1SpawnPoint, player2SpawnPoint;
-    private GameObject player1;//抓人者
-    private GameObject player2;//被抓者
-    private ArmController arm1;
+    //private ScoreManager scoreManager;
+    private UIController uiController;
+    private PlayerController player1;//医生
+    private PlayerController player2;//病人
     private List<Checker> checker_list;
+    private bool cacher=true;//记录当前抓人者
+    private int doctorScore;
+    private int patientScore;
+
     private void Awake()
     {
         checker_list=new List<Checker>();
+        //scoreManager=GameObject.Find("GameManager").GetComponent<ScoreManager>();
+        uiController=GameObject.Find("UIManager").GetComponent<UIController>();
         SpawnPlayer();
-        AddChecker(new HelpHand(this));
+        AddChecker(new TimeCountDown(this));
+        StartCheck();
     }
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("CheckByTime",0f,Time.deltaTime);
         //Debug.Log(Time.deltaTime);
     }
 
@@ -30,14 +37,18 @@ public class PlayerManager : MonoBehaviour
     }
     void SpawnPlayer()
     {
-        player1 = Instantiate(player1Prefab, player1SpawnPoint.position, player1SpawnPoint.rotation);
-        player2 = Instantiate(player2Prefab, player2SpawnPoint.position, player2SpawnPoint.rotation);
+        player1 = Instantiate(player1Prefab, player1SpawnPoint.position, player1SpawnPoint.rotation).GetComponent<PlayerController>();
+        player2 = Instantiate(player2Prefab, player2SpawnPoint.position, player2SpawnPoint.rotation).GetComponent<PlayerController>();
         player1.transform.SetParent(GameObject.Find("PlayGround").transform);
         player2.transform.SetParent(GameObject.Find("PlayGround").transform);
-        player1.GetComponent<PlayerController>().SetOpponent(player2.GetComponent<PlayerController>());
-        player2.GetComponent<PlayerController>().SetOpponent(player1.GetComponent<PlayerController>());
-        arm1=player1.GetComponentInChildren<ArmController>();
-        arm1.SetPlayer(player2.transform);
+        player1.SetManager(this);
+        player2.SetManager(this);
+        player1.SetOpponent(player2);
+        player2.SetOpponent(player1);
+        player1.GetArm().SetPlayer(player2.transform);
+        player2.GetArm().SetPlayer(player1.transform);
+        player1.SetRole(cacher);
+        player2.SetRole(!cacher);
     }
 
     public void AddChecker(Checker checker){
@@ -48,6 +59,15 @@ public class PlayerManager : MonoBehaviour
         foreach(Checker checher in checker_list){
             checher.Check();
         }
+    }
+
+    public void StartCheck(){
+        InvokeRepeating("CheckByTime",0f,Time.deltaTime);
+    }
+
+    public void ClearCheck(){
+        CancelInvoke("CheckByTime");
+        checker_list.Clear();
     }
 
     public float DetectDistance(){
@@ -65,8 +85,19 @@ public class PlayerManager : MonoBehaviour
     public PlayerController GetPlayer2(){
         return player2.GetComponent<PlayerController>();
     }
-    
-    public ArmController GetArm(){
-        return arm1;
+    private IEnumerator DestroyPlayers(){
+        ClearCheck();
+        player1.onStunned();
+        player2.onStunned();
+        yield return new WaitForSeconds(1f);
+        Destroy(player1.gameObject);
+        Destroy(player2.gameObject);
+    }
+    public void EndGame(bool role){
+        StartCoroutine(DestroyPlayers());
+        //todo: 计分，进入中场
+    }
+    public void RefreshTime(float time){
+        uiController.SetTimeText(time);
     }
 }

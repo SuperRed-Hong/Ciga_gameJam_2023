@@ -5,21 +5,24 @@ using UnityEngine;
 public class HelpHand : Checker
 {
     private float growMaxDistance=4f;
-    private int growMaxTime=200;
+    private int growMaxTime=1000;
     private int growTime=0;
-    public HelpHand(PlayerManager manager){
+    private ArmController arm;
+    public HelpHand(PlayerManager manager, ArmController arm){
         this.manager=manager;
+        this.arm=arm;
         growTime=0;
     }
     public override int Check(){
+        //Debug.Log(manager.DetectDistance());
         if(manager.DetectDistance()<growMaxDistance){
             if(growTime<growMaxTime){
                 ++growTime;
-                manager.GetArm().GrowArmLength();
+                arm.GrowArmLength();
             }
         }else{
             growTime=0;
-            //manager.GetArm().ResetArmLength();
+            arm.ResetArmLength();
         }
         return 0;
     }

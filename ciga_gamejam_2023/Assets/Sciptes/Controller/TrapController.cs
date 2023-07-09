@@ -21,7 +21,7 @@ public class TrapController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("222");
+            //Debug.Log("222");
             PlayerController playerCaught = other.gameObject.GetComponent<PlayerController>();
             playerCaught.onStunned();
             //playerCaught.enabled=false;
@@ -29,10 +29,6 @@ public class TrapController : MonoBehaviour
             //other.gameObject.GetComponent<PlayerController>().enabled=true;
             playerCaught.offStunned();
             Destroy(this.gameObject);
-        }
-        else
-        {
-            Debug.Log("111");
         }
     }
 }

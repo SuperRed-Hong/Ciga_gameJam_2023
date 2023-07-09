@@ -6,10 +6,12 @@ public class ArmController : MonoBehaviour
 {
     //[SerializeField] private CapsuleCollider2D hand;
     [SerializeField] private float growthRate;
-    private Transform player; // 玩家的Transform组件
+    [SerializeField] private Renderer hand;
+    [SerializeField] private Renderer arm;
+    [SerializeField] private PlayerController controller;
+    private Transform player; // 对手玩家的Transform组件
     private Vector3 originalScale;
     private bool canCatch;
-    public bool isOver= false;
 
     public void SetPlayer(Transform p){
         player=p;
@@ -18,12 +20,6 @@ public class ArmController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            if(canCatch){
-                Debug.Log("Catch!");
-                //catch!
-            }
-        }
         // 计算玩家相对于箭头的方向
         Vector3 direction = player.position - transform.position;
 
@@ -32,27 +28,28 @@ public class ArmController : MonoBehaviour
         this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
     private void OnTriggerEnter2D(Collider2D collider){
-        if(collider.transform==player){
-            canCatch=true;
-            Debug.Log("catch the patient");
-            isOver=true;
+        if(canCatch && collider.transform==player){
+            controller.Win();
         }
     }
+    /*
     private void OnTriggerExit2D(Collider2D collider){
         if(collider.transform==player){
             canCatch=false;
         }
-    }
+    }*/
     public void GrowArmLength()
     {
         Vector3 newScale = transform.localScale;
         newScale.x += growthRate * Time.deltaTime;
         newScale.y += growthRate * Time.deltaTime;
-
         transform.localScale = newScale;
     }
     public void ResetArmLength(){
         transform.localScale = originalScale;
     }
-    
+    public void SetUsable(bool visible){
+        hand.enabled=arm.enabled=visible;
+        canCatch=visible;
+    }
 }
