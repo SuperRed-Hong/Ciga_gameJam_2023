@@ -62,12 +62,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void StartCheck(){
-        InvokeRepeating("CheckByTime",0f,Time.deltaTime);
+        InvokeRepeating("CheckByTime",0f,0.02f);
     }
 
     public void ClearCheck(){
         CancelInvoke("CheckByTime");
-        checker_list.Clear();
     }
 
     public float DetectDistance(){
@@ -92,6 +91,7 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Destroy(player1.gameObject);
         Destroy(player2.gameObject);
+        checker_list.Clear();
     }
     public void EndGame(bool role){
         StartCoroutine(DestroyPlayers());

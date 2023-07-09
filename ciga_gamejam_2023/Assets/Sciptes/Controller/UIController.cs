@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
 
     private ScoreManager scoreManager;
 
-    public float timeleft;
+    //public float timeleft;
     public TextMeshProUGUI CountDown_tet;
     //private bool isCounting;
 
@@ -87,7 +87,7 @@ public class UIController : MonoBehaviour
     }
 
     public void SetTimeText(float time){
-        CountDown_tet.text = timeleft.ToString(format: "0");
+        CountDown_tet.text = time.ToString(format: "0");
     }
 
 }
